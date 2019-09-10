@@ -339,7 +339,34 @@ In the mean time I read the description again. It said something about `artist`.
 Then I used tshark to get all images.
 
 ```bash
-tshark -r radio.pcapng | rg -o '/image/[^ ]+' | sed -E 's/^/https:\/\/o.scdn.co/' | rg -n ''
+> tshark -r radio.pcapng | rg -o '/image/[^ ]+' | sed -E 's/^/https:\/\/o.scdn.co/' | rg -n ''
+1:https://o.scdn.co/image/20d5ccc04cba362c613f0d8521077ec8bcb1e857
+2:https://o.scdn.co/image/0843f93df10815bde14176ba1f8459e8b32f38b6
+3:https://o.scdn.co/image/43b85702779d9cdf91430cbe7f8c9327c1a2fe45
+4:https://o.scdn.co/image/41d223339d4a7b6002665c4196cb055019f3e7aa
+5:https://o.scdn.co/image/7e79bbb6f3c7e32da90e643ab40ba40533c53bac
+6:https://o.scdn.co/image/c588ccad32d0d482301c5ab42e71a359464ff830
+7:https://o.scdn.co/image/d3b33d8067e34f2e7555205471a2b7d4693612f6
+8:https://o.scdn.co/image/336471918174b6c76124f2dcef8956c8016178f5
+9:https://o.scdn.co/image/e08b756820a7c5a05220b733942575d06c744ec4
+10:https://o.scdn.co/image/474115d5ea751cbc949052427538e9c745db077e
+11:https://o.scdn.co/image/77eb7c17cafe55026b823b02df0c4513a863e106
+12:https://o.scdn.co/image/8b96f771abe2f3d8d998f589d7b40748f6f4463d
+13:https://o.scdn.co/image/ba9f2138015f926ed8fffe8a4c285f330216f572
+14:https://o.scdn.co/image/7a670279f866362cdc04d76450c351b83dba53cd
+15:https://o.scdn.co/image/62c225bdbe30485332b18cf9cbfbaeb010b33b21
+16:https://o.scdn.co/image/118247f5437b8a527487f5f99ce576b8fbdc98fc
+17:https://o.scdn.co/image/606336f26cd23dc672ba3b1ad986f0284e089d7d
+18:https://o.scdn.co/image/9f8bd0efcc5566b42db44064b6a1e0356c5dbdd4
+19:https://o.scdn.co/image/26a3e45a68317a8e21a08b02bb136335b8963ae1
+20:https://o.scdn.co/image/7f3fd84167f5f990f570aedd338f8ed31541d085
+21:https://o.scdn.co/image/70b0c1d8ae1d88e5a4ced559b97bc06ab048ee56
+22:https://o.scdn.co/image/1a3f165b0e7a0ea003c9f3a447e05cc2dfa4288a
+23:https://o.scdn.co/image/5955b33bd14a312f331bb3c2dc3ac527fc21d6df
+24:https://o.scdn.co/image/96b35b373991e847a94926e21f1fddc4a82ec784
+25:https://o.scdn.co/image/77eb7c17cafe550265ac9656051fe4e651a00d70
+26:https://o.scdn.co/image/a392f0f7a7dbc6424f769f6f7f7824e40c42a734
+27:https://o.scdn.co/image/45881f936e2aadb16355052fdf68cf54ed4cacba
 ```
 
 And I've gone through all of them, and got the first letter of the artist.
