@@ -1,0 +1,90 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+body {
+    background: #020202;
+}
+
+figure {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+a {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+a.title {
+    text-decoration: none;
+    &:hover {
+        color: initial;
+    }
+}
+
+code {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+pre {
+    background: #181818;
+}
+
+a.btn {
+    text-decoration: none;
+}
+.btn .icon {
+    float: none;
+    margin: 0;
+}
+
+.post-content img {
+    margin: auto;
+    display: block;
+}
+
+.btn {
+    background: transparent;
+    border: 2px solid #181818;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.btn:hover {
+    background: #181818;
+}
+
+.post-content {
+    div + h1 {
+        margin-top: 1.2em;
+    }
+    p + h1 {
+        margin-top: 1.2em;
+    }
+}
+
+header h1 {
+    margin: 0;
+    &:before {
+        content: "";
+    }
+}
+
+.post-header {
+    h1 {
+        margin: 0 0 0 -40px;
+        &:before {
+            content: "./ ";
+        }
+    }
+}
