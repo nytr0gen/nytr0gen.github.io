@@ -18,7 +18,7 @@ layout: default
   <div class="post-content e-content" itemprop="articleBody">
     {% include toc.html html=content %}
 
-    {{ content }}
+    {{ content | replace: '<a href="http', '<a rel="nofollow noopener noreferrer" target="_blank" href="http' }}
   </div>
 
   {%- if site.disqus.shortname -%}

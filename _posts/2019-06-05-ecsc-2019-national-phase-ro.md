@@ -14,11 +14,11 @@ Webcam (5p): Warmup
 
 **Summary**
 
-Flag is in the jquery file https://webcam.challs.cybersecuritychallenge.ro/js/jquery-3.3.1.slim.min.js
+Flag is in the jquery file `https://webcam.challs.cybersecuritychallenge.ro/js/jquery-3.3.1.slim.min.js`
 
 **Steps to Solution**
 
-I entered the website. Then I tried admin:admin credentials. Alert, let’s look at the JS file. Opened DevTools. Flag is there in jquery.js
+I entered the website. Then I tried admin:admin credentials. Alert, let’s look at the JS file. Opened DevTools. Flag is there in jquery.js
 
 get puzzled! (50p): Web
 =======
@@ -30,23 +30,29 @@ Some php tricks and imagination. Followed the path and saw the flag in source co
 
 **Steps to Solution**
 
-I got to the page https://puzzled.challs.cybersecuritychallenge.ro/
+I got to the page `https://puzzled.challs.cybersecuritychallenge.ro/`
 
 Saw that error. I imagined the code to be something like this  `$_GET['show%00code#<script>$x="%00";</script>aaa=']`
 
 So I tried the the param. Redirects, needs stop param (everything seen in Burp)
 
+```
 https://puzzled.challs.cybersecuritychallenge.ro/?show%2500code%23%3Cscript%3E$x%3d%22%2500%22%3b%3C/script%3Eaaa=1234&stop=
+```
 
 Then
 
+```
 https://puzzled.challs.cybersecuritychallenge.ro/?show%2500code%23%3Cscript%3E$x%3d%22%2500%22%3b%3C/script%3Eaaa=1234&stop=&flag_token_sada3edewdc32dwq=123
+```
 
 No luck. But it suggets flag_token_sad123a3edewdc32dwasd22343qds.php. Tried the file. Got redirect.
 
+```
 https://puzzled.challs.cybersecuritychallenge.ro/flag_token_sad123a3edewdc32dwasd22343qds.php/
+```
 
-Flag is in Source Code
+Flag was in the Source Code
 
 Voting Platform (150p): Web
 =======
@@ -155,7 +161,7 @@ Then i tried everything. Found something about remote arbitrary file disclosure 
 
 Left it like that, got to work on other challenges.
 
-Got back. https://github.com/BuffaloWill/oxml_xxe.git nothing. svg, xml xxe.
+Got back. `https://github.com/BuffaloWill/oxml_xxe.git` nothing. svg, xml xxe.
 
 Reading the hint I figured I should think deeper how they process this. Well I already know it's a libre office convert. And allows lots of format. But what if the filename is used in the command? Let's try that.
 
@@ -278,7 +284,7 @@ Start and stop are the first and last words. They provide the key for the lowerc
 
 First thought it was Vigenere (too many points for simple caesar) and they just used Caesar in the name. Wasted a lot of time on that path.
 
-Finally just tried to decode first key with caesar at https://www.dcode.fr/caesar-cipher
+Finally just tried to decode first key with caesar at [https://www.dcode.fr/caesar-cipher](https://www.dcode.fr/caesar-cipher)
 
 START and STOP. figured it would be lower chars, upper chars. Coded some python
 
@@ -399,7 +405,7 @@ Run binwalk. See some pngs.
 binwalk -D 'png image:png' piet.jpg
 ```
 
-Got the pngs. No idea what now. Searched for piet and secret online. Found https://www.bertnase.de/npiet/ . There’s a pretty neat hint on that page that says you should use gimp to resave images if they don’t work properly.
+Got the pngs. No idea what now. Searched for piet and secret online. Found [https://www.bertnase.de/npiet/](https://www.bertnase.de/npiet/). There’s a pretty neat hint on that page that says you should use gimp to resave images if they don’t work properly.
 
 Got flag!
 
